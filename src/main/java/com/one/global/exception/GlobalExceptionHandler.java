@@ -8,6 +8,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
 
@@ -48,6 +49,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(CommonErrorCode.INVALID_REQUEST.getStatus())
                 .body(BaseResponse.fail(CommonErrorCode.INVALID_REQUEST, fieldErrors));
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<BaseResponse<Object>> handleNoResourceFound(NoResourceFoundException e) {
+        log.warn("NoResource: {}", e.getResourcePath());
+        return ResponseEntity
+                .status(CommonErrorCode.NOT_FOUND.getStatus())
+                .body(BaseResponse.fail(CommonErrorCode.NOT_FOUND));
     }
 
     @ExceptionHandler(Exception.class)
