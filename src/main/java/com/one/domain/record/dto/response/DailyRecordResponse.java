@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 public class DailyRecordResponse {
 
+    private Long id;
     private LocalDateTime recordedAt;
     private RecordType recordType;
     private String title;
