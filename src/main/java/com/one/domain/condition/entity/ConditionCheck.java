@@ -4,20 +4,17 @@ import com.one.domain.child.entity.Child;
 import com.one.domain.condition.enums.BreathingStatus;
 import com.one.domain.condition.enums.HydrationStatus;
 import com.one.domain.condition.enums.ResponseStatus;
-import com.one.domain.fever.entity.FeverEpisode;
 import com.one.domain.user.entity.User;
 import com.one.global.entity.BaseCreatedEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Entity
 @Table(name = "condition_checks")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class ConditionCheck extends BaseCreatedEntity {
 
     @Id
@@ -31,10 +28,6 @@ public class ConditionCheck extends BaseCreatedEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fever_episode_id")
-    private FeverEpisode feverEpisode;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "response_status", nullable = false, length = 10)
@@ -50,4 +43,16 @@ public class ConditionCheck extends BaseCreatedEntity {
 
     @Column(columnDefinition = "TEXT")
     private String note;
+
+
+    public static ConditionCheck create (Child child, User user, ResponseStatus responseStatus, BreathingStatus breathingStatus, HydrationStatus hydrationStatus, String note) {
+        return ConditionCheck.builder()
+                .child(child)
+                .user(user)
+                .responseStatus(responseStatus)
+                .breathingStatus(breathingStatus)
+                .hydrationStatus(hydrationStatus)
+                .note(note)
+                .build();
+    }
 }
