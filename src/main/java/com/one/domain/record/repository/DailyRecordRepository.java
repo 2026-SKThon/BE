@@ -1,6 +1,7 @@
 package com.one.domain.record.repository;
 
 import com.one.domain.record.entity.DailyRecord;
+import com.one.domain.record.repository.custom.DailyRecordCustomRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface DailyRecordRepository extends JpaRepository<DailyRecord, Long> {
+public interface DailyRecordRepository extends JpaRepository<DailyRecord, Long>, DailyRecordCustomRepository {
 
     @Query("""
             select r from DailyRecord r
