@@ -1,8 +1,8 @@
 package com.one.domain.condition.service;
 
-import com.one.domain.child.ChildRepository;
 import com.one.domain.child.entity.Child;
 import com.one.domain.child.exception.ChildErrorCode;
+import com.one.domain.child.repository.ChildRepository;
 import com.one.domain.condition.dto.request.ConditionCheckRequest;
 import com.one.domain.condition.entity.ConditionCheck;
 import com.one.domain.condition.repository.ConditionCheckRepository;
