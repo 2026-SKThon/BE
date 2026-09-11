@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Child", description = "아이 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/children/{childId}")
+@RequestMapping("/api/children")
 public class ChildController {
 
     private final ChildService childService;
     private final CurrentUserProvider currentUserProvider;
 
     @Operation(summary = "오늘의 리포트 조회")
-    @GetMapping("/report")
+    @GetMapping("/{childId}/report")
     public ResponseEntity<BaseResponse<ReportResponse>> getReport(
             @Parameter(description = "아이 ID") @PathVariable Long childId
     ) {
