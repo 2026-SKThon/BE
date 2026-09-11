@@ -7,14 +7,12 @@ import com.one.domain.temperature.enums.MeasurementSite;
 import com.one.domain.temperature.enums.TemperatureSource;
 import com.one.global.entity.BaseCreatedEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
+@Builder
 @Entity
 @Table(name = "temperature_logs")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
