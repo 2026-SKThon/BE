@@ -42,4 +42,27 @@ public class Child extends BaseTimeEntity {
 
     @Column(name = "regular_medication", columnDefinition = "TEXT")
     private String regularMedication;
+
+    public void updateProfile(String name, LocalDate birthDate, Double weight, LocalDate weightRecordedAt,
+                               AllergyStatus allergyStatus, String allergyDetail, String regularMedication) {
+        if (name != null) {
+            this.name = name;
+        }
+        if (birthDate != null) {
+            this.birthDate = birthDate;
+        }
+        if (weight != null) {
+            this.weight = weight;
+            this.weightRecordedAt = weightRecordedAt != null ? weightRecordedAt : LocalDate.now();
+        }
+        if (allergyStatus != null) {
+            this.allergyStatus = allergyStatus;
+        }
+        if (allergyDetail != null) {
+            this.allergyDetail = allergyDetail;
+        }
+        if (regularMedication != null) {
+            this.regularMedication = regularMedication;
+        }
+    }
 }

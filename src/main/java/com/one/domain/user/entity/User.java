@@ -29,4 +29,13 @@ public class User extends BaseTimeEntity {
 
     @Column(length = 20)
     private String phone;
+
+    public void updateProfile(String name, String phone) {
+        if (name != null) {
+            this.name = name;
+        }
+        if (phone != null) {
+            this.phone = phone;
+        }
+    }
 }
