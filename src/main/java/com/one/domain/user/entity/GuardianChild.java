@@ -1,7 +1,7 @@
-package com.one.domain.child.entity;
+package com.one.domain.user.entity;
 
+import com.one.domain.child.entity.Child;
 import com.one.domain.child.enums.GuardianRole;
-import com.one.domain.user.entity.User;
 import com.one.global.entity.BaseCreatedEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
