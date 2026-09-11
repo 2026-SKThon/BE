@@ -32,4 +32,13 @@ public class DailyRecord extends BaseCreatedEntity {
 
     @Column(name = "recorded_at", nullable = false)
     private LocalDateTime recordedAt;
+
+    @Column(name = "temperature")
+    private Double temperature;
+
+    @Column(name = "medication_name", length = 100)
+    private String medicationName;
+
+    @Column(name = "dosage")
+    private Double dosage;
 }
