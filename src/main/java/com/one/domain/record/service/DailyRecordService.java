@@ -1,6 +1,7 @@
 package com.one.domain.record.service;
 
 import com.one.domain.child.exception.ChildErrorCode;
+import com.one.domain.record.dto.response.DailyRecordCursorResponse;
 import com.one.domain.record.dto.response.DailyRecordResponse;
 import com.one.domain.record.entity.DailyRecord;
 import com.one.domain.record.exception.RecordErrorCode;
@@ -11,6 +12,7 @@ import com.one.global.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +56,34 @@ public class DailyRecordService {
         return top3ByChildIdToday.stream()
                 .map(DailyRecordMapper::toDailyRecordResponse)
                 .toList();
+    }
+
+    // 홈 화면 오늘의 기록 전체 조회 페이지네이션
+    public DailyRecordCursorResponse getAllDailyRecords(
+            Long currentUserId, Long childId,
+            int size, Long cursorId, LocalDateTime cursor
+    ) {
+
+        log.info("[데일리 기록 전체 조회] START, childId = {}", childId);
+
+        if(!guardianChildRepository.existsByUserIdAndChildId(currentUserId, childId)) {
+            log.info("[데일리 기록 전체 조회] 내 아이의 기록만 확인 가능합니다. currentUserId = {}. childId = {}", currentUserId, childId);
+            throw new CustomException(ChildErrorCode.CHILD_NOT_MANAGED);
+        }
+
+        // 오늘 날짜 00시
+        LocalDateTime start = LocalDate.now().atStartOfDay();
+
+        //다음날 00시
+        LocalDateTime end = start.plusDays(1);
+
+                PageRequest request = PageRequest.of(0, size);
+
+        Slice<DailyRecord> dailyRecordsCursor = dailyRecordRepository
+                .findAllByChildIdTodayWithCursor(childId, start, end, cursor, cursorId, request);
+
+        log.info("[데일리 기록 전체 조회] END");
+        return DailyRecordMapper.toDailyRecordCursorResponse(dailyRecordsCursor);
     }
 
 }
